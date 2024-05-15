@@ -36,6 +36,41 @@ class TopicsController < ApplicationController
 
   skip_before_action :check_xhr, only: %i[show feed]
 
+  def maps_data
+
+    latitude = params[:latitude]
+    longitude = params[:longitude]
+
+    current_point = "POINT(#{longitude} #{latitude})"
+
+    topics = Topic.select(:lonlat, :icon, :id, :title)
+    .where.not(lonlat: nil)
+    .where(
+      "ST_DWithin(lonlat, ST_MakePoint(?, ?), ?)", longitude, latitude, 100000
+    )
+    .limit(500)
+
+    features = topics.map do |topic|
+      {
+        type: 'Feature',
+        geometry: RGeo::GeoJSON.encode(topic.lonlat),
+        properties: {
+          title: topic.title,
+          icon: topic.icon,
+          postId: topic.id
+        }
+      }
+    end
+
+    data = {
+      type: 'FeatureCollection',
+      features: features
+    }
+    puts data
+
+    render json: data
+  end  
+
   def id_for_slug
     topic = Topic.find_by_slug(params[:slug])
     guardian.ensure_can_see!(topic)

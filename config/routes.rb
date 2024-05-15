@@ -1254,6 +1254,7 @@ Discourse::Application.routes.draw do
     put "topics/reset-new" => "topics#reset_new"
     put "topics/pm-reset-new" => "topics#private_message_reset_new"
     post "topics/timings"
+    get  "topics/maps_data" => "topics#maps_data"
 
     get "topics/similar_to" => "similar_topics#index"
     resources :similar_topics, only: [:index]

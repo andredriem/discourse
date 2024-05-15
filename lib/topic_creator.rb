@@ -123,6 +123,9 @@ class TopicCreator
       visible: @opts[:visible],
     }
 
+    topic_params[:lonlat] = @opts[:lonlat] if @opts[:lonlat].present?
+    topic_params[:icon] = @opts[:icon] if @opts[:icon].present?
+
     %i[subtype archetype import_mode advance_draft].each do |key|
       topic_params[key] = @opts[key] if @opts[key].present?
     end

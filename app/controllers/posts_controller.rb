@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  
   # Bug with Rails 7+
   # see https://github.com/rails/rails/issues/44867
   self._flash_types -= [:notice]
@@ -796,7 +798,9 @@ class PostsController < ApplicationController
       typing_duration_msecs
       composer_open_duration_msecs
       visible
-      draft_key
+      draft_key,
+      longlat,
+      icon,
     ]
 
     Post.plugin_permitted_create_params.each do |key, value|
@@ -911,6 +915,11 @@ class PostsController < ApplicationController
       result[:target_emails] = emails.join(",")
       result[:target_group_names] = groups.join(",")
     end
+
+    if params[:longitude] && params[:latitude]
+      result[:lonlat] = "POINT(#{params[:longitude].to_f} #{params[:latitude].to_f})"
+    end
+    result[:icon] = params[:icon] if params[:icon].present?
 
     result.permit!
     result.to_h
