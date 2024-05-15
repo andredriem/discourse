@@ -13,6 +13,10 @@ class Topic < ActiveRecord::Base
   include LimitedEdit
   extend Forwardable
 
+  # validates presence of longlat and icon only on create
+  #alidates :lonlat, presence: true, on: :create
+  #validates :icon, presence: true, on: :create
+
   EXTERNAL_ID_MAX_LENGTH = 50
 
   self.ignored_columns = [

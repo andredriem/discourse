@@ -36,6 +36,9 @@ GEM
     activerecord (7.0.8.1)
       activemodel (= 7.0.8.1)
       activesupport (= 7.0.8.1)
+    activerecord-postgis-adapter (8.0.3)
+      activerecord (~> 7.0.0)
+      rgeo-activerecord (~> 7.0.0)
     activesupport (7.0.8.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
@@ -365,6 +368,10 @@ GEM
     request_store (1.7.0)
       rack (>= 1.4)
     rexml (3.2.6)
+    rgeo (3.0.1)
+    rgeo-activerecord (7.0.1)
+      activerecord (>= 5.0)
+      rgeo (>= 1.0.0)
     rinku (2.0.6)
     rotp (6.3.0)
     rouge (4.2.1)
@@ -551,6 +558,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.8.3)
   activemodel (< 7.1)
   activerecord (< 7.1)
+  activerecord-postgis-adapter
   activesupport (< 7.1)
   addressable
   annotate
@@ -645,6 +653,7 @@ DEPENDENCIES
   redcarpet
   redis (< 5.0)
   redis-namespace
+  rgeo
   rinku
   rotp
   rqrcode

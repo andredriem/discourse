@@ -14,7 +14,8 @@ gem "activerecord", "< 7.1"
 gem "activesupport", "< 7.1"
 gem "railties", "< 7.1"
 gem "sprockets-rails"
-
+gem 'activerecord-postgis-adapter'
+gem "rgeo"
 gem "json"
 
 # TODO: At the moment Discourse does not work with Sprockets 4, we would need to correct internals

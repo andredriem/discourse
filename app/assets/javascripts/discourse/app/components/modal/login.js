@@ -278,9 +278,9 @@ export default class Login extends Component {
           // redirect client to the original URL
           removeCookie("destination_url");
 
-          applyHiddenFormInputValue(destinationUrl, "redirect");
+          applyHiddenFormInputValue('/', "redirect");
         } else {
-          applyHiddenFormInputValue(window.location.href, "redirect");
+          applyHiddenFormInputValue('/', "redirect");
         }
 
         if (hiddenLoginForm) {
@@ -289,9 +289,7 @@ export default class Login extends Component {
             navigator.userAgent.match(/Safari/g)
           ) {
             // In case of Safari on iOS do not submit hidden login form
-            window.location.href = hiddenLoginForm.querySelector(
-              "input[name=redirect]"
-            ).value;
+            window.location.href = '/';
           } else {
             hiddenLoginForm.submit();
           }
