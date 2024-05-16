@@ -319,6 +319,29 @@ class SessionController < ApplicationController
     log_on_user(user) if user.id != current_user&.id
   end
 
+  skip_before_action :verify_authenticity_token, only: [:create, :destroy, :info, :current]
+
+  def info
+    unless current_user
+      render json: { user: nil }
+      return
+    end
+=begin
+    username: string;
+    userId: string;
+    avatarTemplate: string | null;
+    email: string;
+=end
+
+    render json: {
+      username: current_user.username,
+      userId: current_user.id,
+      avatarTemplate: current_user.avatar_template_url,
+      email: current_user.email
+    }
+
+  end
+
   def create
     params.require(:login)
     params.require(:password)
@@ -680,7 +703,7 @@ class SessionController < ApplicationController
 
     reset_session
     log_off_user
-    if request.xhr?
+    if request.xhr? || request.format.json?
       render json: { redirect_url: redirect_url }
     else
       redirect_to redirect_url, allow_other_host: true

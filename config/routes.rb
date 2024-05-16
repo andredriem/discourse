@@ -403,6 +403,12 @@ Discourse::Application.routes.draw do
 
     resources :session, id: RouteFormat.username, only: %i[create destroy become] do
       get "become" if !Rails.env.production?
+      # an api route to redirect the destory method to the delete_session so i can develop without
+      # worring by cors in the browser
+      post 'delete_session' => 'session#destroy'
+
+      # info, collection post to get info about the current user
+      collection { get "info" }
 
       collection { post "forgot_password" }
     end
