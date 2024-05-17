@@ -122,7 +122,7 @@ class GlobalSetting
   end
 
   def self.database_config
-    hash = { "adapter" => "postgresql" }
+    hash = { "adapter" => "postgis" }
 
     %w[
       pool
